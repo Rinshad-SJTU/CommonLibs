@@ -198,4 +198,4 @@ if __name__=='__main__':
     block_dir='../data/block_dir/'
     data_dic=libfi.getfiledicbyext(block_dir,'.npz')
     # file_dic=libfi.getfiledicbyext(folder=)
-    data=libsdi.mutil_numpy_npz(file_dics=data_dic,args=c,block_shape=[32,32,3],transform_fn=_npz_image_data)
+    data=mutil_numpy_npz(file_dics=data_dic,args=c,block_shape=[32,32,3],transform_fn=_npz_image_data)
