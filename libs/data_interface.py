@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import libs.view_interface as libvi
+import sys
+sys.path.append('/home/sheldon/Documents/Code/CommonLib/')
+
 def split_data_set(label,radio=0.7):
     '''
     split data set to train set and test set
@@ -194,8 +197,7 @@ class mutil_image_reader:
 
 
 if __name__=='__main__':
-    import sys
-    sys.path.append('/home/sheldon/Documents/Code/CommonLib/')
+
     from . import file_interface as libfi
     image_dir='/home/sheldon/Documents/Data/YiZhou/Result/Labeled_MA/train/train_raw/1'
     data_dic=libfi.getfiledicbyext(image_dir,'.jpg')
