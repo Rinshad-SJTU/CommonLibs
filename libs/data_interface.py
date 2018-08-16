@@ -18,7 +18,7 @@ def split_data_set(label,radio=0.7):
 
     return list(train_index),list(test_index)
 
-class mutil_numpy_npz:
+class mutil_npzfile_reader:
     """
     file_dics:
         file的关键key和路径
@@ -106,7 +106,7 @@ class mutil_numpy_npz:
         return len(self._index2ids)
 
 
-class mutil_image_numpy:
+class mutil_image_reader:
     """
     image_dics:
         图像的关键key和路径
@@ -194,8 +194,17 @@ class mutil_image_numpy:
 
 
 if __name__=='__main__':
+    import sys
+    sys.path.append('/home/sheldon/Documents/Code/CommonLib/')
     from . import file_interface as libfi
-    block_dir='../data/block_dir/'
-    data_dic=libfi.getfiledicbyext(block_dir,'.npz')
+    image_dir='/home/sheldon/Documents/Data/YiZhou/Result/Labeled_MA/train/train_raw/1'
+    data_dic=libfi.getfiledicbyext(image_dir,'.jpg')
     # file_dic=libfi.getfiledicbyext(folder=)
-    data=mutil_numpy_npz(file_dics=data_dic,args=c,block_shape=[32,32,3],transform_fn=_npz_image_data)
+    import cv2
+    def _readimage(file_path):
+        im=cv2.imread(file_path).astype(np.float)/255.0
+        return im
+    import argparse as ag
+    c=ag.ArgumentParser()
+    data=mutil_image_reader(image_dics=data_dic,args=c,block_shape=[64,64,3],transform_fn=_readimage)
+    print(len(data))
