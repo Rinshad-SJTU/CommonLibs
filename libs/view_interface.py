@@ -18,7 +18,7 @@ def blocks_to_image(blocks,index,hight_num=20,weight_num=20):
     return tmpim
 
 
-import libs.class_interface as libci
+import class_interface as libci
 def image_to_blocks(image,radius=16,angles=[0],stride=4,pyramid=1):
     #return image blocks and ids{centroid,radius,angle}
     l=len(range(radius,image.shape[0]-radius,stride))*len(range(radius,image.shape[1]-radius,stride))
@@ -40,6 +40,9 @@ def image_to_blocks(image,radius=16,angles=[0],stride=4,pyramid=1):
     return image_blocks,ids
 
 def image_to_blocksinfo(image,radius=16,angles=[0],stride=4,pyramid=1):
+    '''
+    return ids and block shape
+    '''
     l=len(range(radius,image.shape[0]-radius,stride))*len(range(radius,image.shape[1]-radius,stride))
     block_shape=(l,2*radius,2*radius,image.shape[2])
     ids=[0]*l
