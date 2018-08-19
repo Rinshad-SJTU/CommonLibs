@@ -201,7 +201,7 @@ if __name__=='__main__':
 
     image_dir='/home/sheldon/Documents/Data/YiZhou/Result/Labeled_MA/train/train_raw/1'
     data_dic=libfi.getfiledicbyext(image_dir,'.jpg')
-    # file_dic=libfi.getfiledicbyext(folder=)
+
     import cv2
     def _readimage(file_path):
         im=cv2.imread(file_path).astype(np.float)/255.0
