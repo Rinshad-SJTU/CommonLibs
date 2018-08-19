@@ -1,10 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
-sys.path.append('/home/sheldon/Documents/Code/CommonLib/')
+if __name__=='__main__':
+    import platform
+    import sys
+    if platform.system()=='Windows':
+        sys.path.append(u'../')
+        sys.path.append(u'F:\IIAI\CommonLibs\libs')
+    elif platform.system()=='Linux':
+        sys.path.append('../')
+        sys.path.append('/home/sheldon/Documents/Code/CommonLib/')
 
-import file_interface as libfi
-import libs.view_interface as libvi
+
+import file_interface as libfi        
+import view_interface as libvi
+
 def split_data_set(label,radio=0.7):
     '''
     split data set to train set and test set
@@ -109,7 +119,7 @@ class mutil_npzfile_reader:
     def __len__(self):
         return len(self._index2ids)
 
-
+import cv2 
 class mutil_image_reader:
     """
     image_dics:
@@ -169,16 +179,15 @@ class mutil_image_reader:
 
     def _genindex_(self,image_dics,args):
         for key in image_dics:
-            loaded=np.load(image_dics[key])
-            ids=loaded['ids']
-            # ids,_=libvi.image_to_blocksinfo(im,radius=args.radius,stride=args.stride)
+            img=cv2.imread(image_dics[key])
+            ids,_=libvi.image_to_blocksinfo(img,radius=args.radius,stride=args.stride)
             for i in range(len(ids)):
                 ids[i].file_key=key
 
             if self._index2ids is None:
-                self._index2ids=ids.tolist()
+                self._index2ids=ids
             else:
-                self._index2ids+=ids.tolist()[:]
+                self._index2ids+=ids[:]
 
     def __getitem_byids__(self,ids):
         self._read_file(ids.file_key)
@@ -194,13 +203,18 @@ class mutil_image_reader:
         return self._shape
 
     def __len__(self):
-        return 1000
+        return len(self._index2ids)
 
 
 if __name__=='__main__':
-
-    image_dir='/home/sheldon/Documents/Data/YiZhou/Result/Labeled_MA/train/train_raw/1'
-    data_dic=libfi.getfiledicbyext(image_dir,'.jpg')
+    import platform 
+    if platform.system()=='Linux':
+        image_dir='/home/sheldon/Documents/Data/YiZhou/Result/Labeled_MA/train/train_raw/1'
+        data_dic=libfi.getfiledicbyext(image_dir,'.jpg|.jpeg|.bmp|.png')
+    elif platform.system()=='Windows':
+        image_dir=u'C:\\Users\\SeldomRiver\\Pictures\\Saved Pictures'
+        export_image_dir=u'C:\\Users\\SeldomRiver\\Pictures'
+        data_dic=libfi.getfiledicbyext(image_dir,'.jpg|.jpeg|.bmp|.png')
 
     import cv2
     def _readimage(file_path):
@@ -208,5 +222,15 @@ if __name__=='__main__':
         return im
     import argparse as ag
     c=ag.ArgumentParser()
+    c.add_argument('--radius')
+    c.add_argument('--stride')
+    c.add_argument('--angle_gap')
+    c.radius=64
+    c.stride=4
+    c.angle_gap=30
     data=mutil_image_reader(image_dics=data_dic,args=c,block_shape=[64,64,3],transform_fn=_readimage)
     print(len(data))
+    import matplotlib.pyplot as plt
+    for i in range(1,len(data),100):
+        im=data[i]
+        cv2.imwrite(im,export_image_dir+'\\{name}.ipg'.format(name=i))
