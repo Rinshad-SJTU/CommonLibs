@@ -56,7 +56,6 @@ def image_to_blocksinfo(image,radius=16,angles=[0],stride=4,pyramid=1):
             ids[index]=libci.Dic2Object(block_id)
             index+=1
     return ids,block_shape
-
 import cv2
 def get_block_fromids(image,ids,block_size):    
     i,j=ids.centroid

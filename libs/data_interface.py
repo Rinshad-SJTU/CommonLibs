@@ -209,7 +209,8 @@ class mutil_image_reader:
 if __name__=='__main__':
     import platform 
     if platform.system()=='Linux':
-        image_dir='/home/sheldon/Documents/Data/YiZhou/Result/Labeled_MA/train/train_raw/1'
+        image_dir='/home/sheldon/Documents/Data/YiZhou/idrid/Original_Images/Training_Set'
+        export_image_dir='/home/sheldon/Documents/Code/IIAI/tmp_tool/result/{name}.jpg'
         data_dic=libfi.getfiledicbyext(image_dir,'.jpg|.jpeg|.bmp|.png')
     elif platform.system()=='Windows':
         image_dir=u'C:\\Users\\SeldomRiver\\Pictures\\Saved Pictures'
@@ -225,12 +226,12 @@ if __name__=='__main__':
     c.add_argument('--radius')
     c.add_argument('--stride')
     c.add_argument('--angle_gap')
-    c.radius=64
+    c.radius=32
     c.stride=4
     c.angle_gap=30
     data=mutil_image_reader(image_dics=data_dic,args=c,block_shape=[64,64,3],transform_fn=_readimage)
     print(len(data))
     import matplotlib.pyplot as plt
-    for i in range(1,len(data),100):
+    for i in range(1000,1500,1):
         im=data[i]
-        cv2.imwrite(im,export_image_dir+'\\{name}.ipg'.format(name=i))
+        cv2.imwrite(export_image_dir.format(name=i),(im[0]*255.0).astype(np.uint8))
