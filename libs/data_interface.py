@@ -172,7 +172,7 @@ class mutil_image_reader:
         if type(index) is list:
             result=[]
             for i in index:
-                result+=self.__getitem_byids__(self._index2ids[i])
+                result.append(self.__getitem_byids__(self._index2ids[i]))
         else:
             result=[self.__getitem_byids__(self._index2ids[index])]
         return result
@@ -232,6 +232,11 @@ if __name__=='__main__':
     data=mutil_image_reader(image_dics=data_dic,args=c,block_shape=[64,64,3],transform_fn=_readimage)
     print(len(data))
     import matplotlib.pyplot as plt
-    for i in range(1000,1500,1):
-        im=data[i]
-        cv2.imwrite(export_image_dir.format(name=i),(im[0]*255.0).astype(np.uint8))
+    i=list(range(1000,100000,1000))
+    ims=data[i]
+    for i in range(len(ims)):
+        im=ims[i]
+        cv2.imwrite(export_image_dir.format(name=i),(im*255.0).astype(np.uint8))
+    # for i in range(1000,1500,1):
+    #     im=data[i]
+    #     cv2.imwrite(export_image_dir.format(name=i),(im[0]*255.0).astype(np.uint8))
