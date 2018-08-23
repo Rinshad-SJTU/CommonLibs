@@ -11,9 +11,9 @@ class process(object):
     def foreward(self,im):
         pass
     
-    def backward(self.im):
+    def backward(self,im):
         pass
-        
+
 
 
 class process_collecction(object):
