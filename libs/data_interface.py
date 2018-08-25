@@ -6,7 +6,7 @@ if __name__=='__main__':
     import sys
     if platform.system()=='Windows':
         sys.path.append(u'../')
-        sys.path.append(u'F:\IIAI\CommonLibs\libs')
+        sys.path.append(u'F:/IIAI/CommonLibs/libs')
     elif platform.system()=='Linux':
         sys.path.append('../')
         sys.path.append('/home/sheldon/Documents/Code/CommonLib/')

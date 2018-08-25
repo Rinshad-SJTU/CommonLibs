@@ -2,7 +2,7 @@ from glob import glob
 import os
 import queue
 import numpy as np
-
+import re
 def exist(file_path):
     return os.path.exists(file_path)
 
@@ -49,7 +49,7 @@ def getfilesbyext(folder,ext,abs_path=True):
 def getfiledicbyext(folder,ext,abs_path=True):
     files=getfilesbyext(folder,ext)
     file_dic={}
-    for num,f in enumerate(files):
+    for _,f in enumerate(files):
         id=os.path.split(f)[-1]
         id=os.path.splitext(id)[0]
         id=id.lower()
@@ -60,3 +60,17 @@ def getfiledetails(file_path):
     (file_dir,tempfilename) = os.path.split(file_path)
     (file_name,file_ext) = os.path.splitext(tempfilename)
     return (file_dir,file_name,file_ext)
+
+def path_match(path_str,path_pattern):
+    match_obj=re.match(path_pattern,path_str,re.I)
+    if match_obj:
+        # print(match_obj)
+        return match_obj.groups()
+    else:
+        return None
+
+# if __name__=='__main__':
+#     x,y,z=path_match('123left_write_45','123(left|right)_(read|write)_(45|135)')
+#     print(x,y,z)
+#     x,y,z=path_match('123right_read_135','123(left|right)_(read|write)_(45|135)')
+#     print(x,y,z)
