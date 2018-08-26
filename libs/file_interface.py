@@ -47,6 +47,11 @@ def getfilesbyext(folder,ext,abs_path=True):
     return files
 
 def getfiledicbyext(folder,ext,abs_path=True):
+
+    '''
+    Return Type:
+        dict(string,list)
+    '''
     files=getfilesbyext(folder,ext)
     file_dic={}
     for _,f in enumerate(files):
@@ -54,6 +59,23 @@ def getfiledicbyext(folder,ext,abs_path=True):
         id=os.path.splitext(id)[0]
         id=id.lower()
         file_dic[id]=f
+    return file_dic
+
+def getfiledicsbyext(folder,ext,abs_path=True):
+    '''
+    Return Type:
+        dict(string,list)
+    '''
+    files=getfilesbyext(folder,ext)
+    file_dic={}
+    for _,f in enumerate(files):
+        id=os.path.split(f)[-1]
+        id=os.path.splitext(id)[0]
+        id=id.lower()
+        if id in file_dic:
+            file_dic[id].append(f)
+        else:
+            file_dic[id]=[f]
     return file_dic
 
 def getfiledetails(file_path):
