@@ -20,7 +20,7 @@ def getfiles(folder,abs_path=True):
     paths.put(folder)
     while not paths.empty():
         files=glob(paths.get())
-        for num,path in enumerate(files):
+        for _,path in enumerate(files):
             if os.path.isdir(path):
                 paths.put(path+'/*')
             else:
