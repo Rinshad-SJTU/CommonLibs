@@ -69,6 +69,15 @@ def path_match(path_str,path_pattern):
     else:
         return None
 
+
+def path_search(path_str,path_pattern):
+    search_obj=re.search(path_pattern,path_str,re.I)
+    if search_obj:
+        # print(match_obj)
+        return search_obj.groups()
+    else:
+        return None
+
 # if __name__=='__main__':
 #     x,y,z=path_match('123left_write_45','123(left|right)_(read|write)_(45|135)')
 #     print(x,y,z)
